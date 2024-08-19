@@ -5,73 +5,15 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import Axios from "axios";
 import convertToSubcurrency from "@/lib/connvertToSubcurrency";
 
 export default function Checkoutform({ amount, userdata }) {
-  console.log("userdata : ", userdata);
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState("");
   const [clientSecret, setClientSecret] = useState("");
   const [loading, setLoading] = useState(false);
-  const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem("cartItems");
-    if (storedCartItems) {
-      setCart(JSON.parse(storedCartItems));
-    }
-  }, []);
-
-  const addDataToDataBase = async () => {
-    try {
-      console.log("Payment successful, proceeding with order creation...");
-      await Promise.all(
-        cart.map(async (item) => {
-          try {
-            const res = await Axios.post("/api/order", {
-              productName: item.name,
-              url: item.url,
-              price: item.price,
-              type: item.collection,
-              quantity: item.quantity,
-              size: item.size,
-              user: userdata.email,
-              firstname: userdata.firstname,
-              lastname: userdata.lastname,
-              address: userdata.address,
-              phone: userdata.phone,
-              city: userdata.city,
-              province: userdata.province,
-              postalcode: userdata.postal,
-            });
-            if (res.status === 200) {
-              console.log("Order created successfully", res.data);
-            } else {
-              console.error("Failed to create order", res.status, res.data);
-              setErrorMessage(
-                `Failed to create order for ${item.name}. Please contact support.`
-              );
-            }
-          } catch (error) {
-            console.error(
-              "Error creating order:",
-              error.response ? error.response.data : error.message
-            );
-            setErrorMessage(
-              `Error creating order for ${item.name}. Please try again or contact support.`
-            );
-          }
-        })
-      );
-    } catch (error) {
-      console.log("There was an issue with the order:", error);
-      setErrorMessage(
-        "There was an issue processing your order. Please try again."
-      );
-    }
-  };
   useEffect(() => {
     fetch("http://localhost:3000/api/create-payment-intent", {
       method: "POST",
@@ -86,6 +28,7 @@ export default function Checkoutform({ amount, userdata }) {
   const handlesubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+    setErrorMessage("");
 
     if (!stripe || !elements) {
       setErrorMessage("Stripe has not loaded properly. Please try again.");
@@ -101,20 +44,14 @@ export default function Checkoutform({ amount, userdata }) {
       return;
     }
 
-    const { error, paymentIntent } = await stripe.confirmPayment({
-      elements,
-      clientSecret,
-      confirmParams: {
-        return_url: `http://www.localhost:3000/payment-success?amount=${amount}`,
-      },
-    });
-
-    if (error) {
-      setErrorMessage(error.message);
-    } else if (paymentIntent && paymentIntent.status === "succeeded") {
-      addDataToDataBase();
-    } else {
-    }
+    await stripe
+      .confirmPayment({
+        elements,
+        clientSecret,
+        confirmParams: {
+          return_url: `http://www.localhost:3000/payment-success?amount=${amount}`,
+        },
+      })
 
     setLoading(false);
   };
