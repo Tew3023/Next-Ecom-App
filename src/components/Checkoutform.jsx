@@ -25,7 +25,7 @@ export default function Checkoutform({ amount, userdata }) {
       .catch((error) => console.error("Error fetching client secret:", error));
   }, [amount]);
 
-  const handlesubmit = async (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     setErrorMessage("");
@@ -44,15 +44,21 @@ export default function Checkoutform({ amount, userdata }) {
       return;
     }
 
-    await stripe
-      .confirmPayment({
-        elements,
-        clientSecret,
-        confirmParams: {
-          return_url: `http://www.localhost:3000/payment-success?amount=${amount}`,
-        },
-      })
+    const { error } = await stripe.confirmPayment({
+      elements,
+      clientSecret,
+      confirmParams: {
+        return_url: `http://www.localhost:3000/payment-success?amount=${amount}`,
+      },
+    })
 
+    if (error) {
+      setErrorMessage(error.message);
+      setLoading(false);
+      return;
+    }
+
+    // If no error, the payment has been confirmed
     setLoading(false);
   };
 
@@ -72,7 +78,7 @@ export default function Checkoutform({ amount, userdata }) {
   }
 
   return (
-    <form onSubmit={handlesubmit}>
+    <form onSubmit={handleSubmit}>
       {clientSecret && <PaymentElement />}
       {errorMessage && <div>{errorMessage}</div>}
       <button

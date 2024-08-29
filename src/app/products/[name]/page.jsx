@@ -2,7 +2,7 @@
 import MaxWarp from "@/components/MaxWarp";
 import Link from "next/link";
 import AddToCart from "@/components/ui/AddToCart";
-import axios from "axios";
+import Popup from "@/components/Popup";
 
 async function getData() {
   const res = await fetch("http://localhost:3000/api/products");
@@ -28,6 +28,12 @@ export default async function Selected({ params }) {
   const finalFilter = Array.isArray(collectionFilter)
   ? collectionFilter.filter((item) => item.name !== name)
   : [];
+
+  const clusterData = {
+    url : filteredData[0]?.url,
+    name : filteredData[0]?.name,
+    price : filteredData[0]?.price,
+  }
 
   return (
     <div>

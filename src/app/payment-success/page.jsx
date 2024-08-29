@@ -15,10 +15,6 @@ export default function PaymentSuccess({ searchParams }) {
     }, []);
 
     useEffect(()=>{
-      console.log('cart : ',cart)
-    },[cart])
-
-    useEffect(()=>{
       const addDataToDataBase = async () => {
         try {
           console.log("Payment successful, proceeding with order creation...");

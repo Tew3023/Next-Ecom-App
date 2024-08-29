@@ -1,12 +1,10 @@
 "use client";
-import Axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import randomInteger from 'random-int';
 
 export default function AddToCart({ filteredData }) {
   const [element, setElement] = useState(false);
@@ -15,7 +13,6 @@ export default function AddToCart({ filteredData }) {
   const showSize = () => {
     setElement(!element);
   };
-
 
 
   const sizeOptions = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49];
@@ -58,7 +55,6 @@ export default function AddToCart({ filteredData }) {
       // Store updated cart items back to localStorage
       localStorage.setItem("cartItems", JSON.stringify(storedCartItems));
       
-      console.log("Item added to cart successfully!");
     } catch (error) {
       console.error(
         "Error adding item to cart:",

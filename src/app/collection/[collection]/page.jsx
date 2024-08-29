@@ -2,11 +2,6 @@
 import MaxWarp from "@/components/MaxWarp";
 import Recom from "@/app/products/Recom";
 import Link from "next/link";
-import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const getData = async (collection) => {
   if (collection === "All-weather") {

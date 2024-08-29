@@ -4,43 +4,42 @@ import Link from "next/link";
 import MaxWarp from "./MaxWarp";
 import { useEffect, useState } from "react";
 
-export default function Nav() {
-  const [cartLen, setCartLen] = useState([]);
-  const [totalQuantity, setTotalQuantity] = useState(0); // State for total quantity
-
-  const updateCartLen = () => {
-    const storedCartItems = localStorage.getItem("cartItems");
-    if (storedCartItems) {
-      setCartLen(JSON.parse(storedCartItems));
-    } else {
-      setCartLen([]); 
-    }
-  };
+// Custom hook to manage cart state
+function useCart() {
+  const [totalQuantity, setTotalQuantity] = useState(0);
 
   useEffect(() => {
-    const total = cartLen.reduce((acc, item) => acc + item.quantity, 0);
-    setTotalQuantity(total);
-  }, [cartLen]);
-  
-
-  useEffect(() => {
-    updateCartLen();
-
-    const handleStorageChange = () => {
-      updateCartLen();
+    const updateCartQuantity = () => {
+      const storedCartItems = localStorage.getItem("cartItems");
+      if (storedCartItems) {
+        const cartItems = JSON.parse(storedCartItems);
+        const total = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+        setTotalQuantity(total);
+      } else {
+        setTotalQuantity(0);
+      }
     };
 
-    window.addEventListener("storage", handleStorageChange);
+    // Initial update
+    updateCartQuantity();
 
-    return () => {
-      window.removeEventListener("storage", handleStorageChange);
-    };
+    // Set up an interval to check for changes
+    const intervalId = setInterval(updateCartQuantity, 1000);
+
+    // Clean up the interval on component unmount
+    return () => clearInterval(intervalId);
   }, []);
 
+  return totalQuantity;
+}
+
+export default function Nav() {
+  const totalQuantity = useCart();
+
   return (
-    <div className="sticky z-[100] top-0 w-full h-20  border-b border-gray-200 bg-white/75 backdrop-blur-lg transition-all inset-x-0">
+    <div className="sticky top-0 z-[100] w-full h-20 bg-white/75 backdrop-blur-lg border-b border-gray-200">
       <MaxWarp>
-        <div className="flex h-20 items-center justify-between border-b border-zinc-200">
+        <div className="flex h-20 items-center justify-between">
           <div className="space-x-6">
             <Link href="/" className="text-2xl font-semibold">
               THESUS

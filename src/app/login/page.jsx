@@ -1,29 +1,36 @@
 'use client'
 import MaxWarp from "@/components/MaxWarp";
 import Link from "next/link";
-import Axios from "axios";
 import { useState } from "react";
-import { useRouter } from 'next/navigation';
 export default function login() {
-  const router = useRouter()  
   const [email,setEmail] = useState('')
   const [password,setPassword] = useState('')
   
   const Login = async (e) => {
     e.preventDefault();
-    try{
-      const res = await Axios.post('/api/auth/login',{
-        email,
-        password
-      })
-      if(res.status === 200){
-        console.log('login successfully!')
-        router.push('/')
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+  
+      if (res.status === 200) {
+        console.log('Login successfully');
+      } else {
+        const data = await res.json();
+        console.log('Login failed: ', data.error || 'Unknown error');
       }
-    }catch(error){
-      console.log("error on registeration : ",error)
+    } catch (error) {
+      console.log("Error during login: ", error);
     }
-  }
+  };
+  
 
   return (
     <div>
@@ -45,6 +52,7 @@ export default function login() {
                 placeholder="Password"
                 onChange={e => setPassword(e.target.value)}
                 value={password}
+                type="password"
               />
               <Link className="text-sm underline underline-offset-4" href="/">
                 Forgot your password?
