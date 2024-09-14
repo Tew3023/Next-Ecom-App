@@ -32,23 +32,23 @@ export default async function admin(){
         <section>
           <MaxWarp className={'max-w-full py-10'}>
            <div className="grid grid-cols-4 gap-4  h-[90vh] ">
-              <div className="bg-orange-500  h-60 rounded-lg p-5 text-white">
+              <div className="bg-zinc-100  h-60 rounded-lg p-5 text-black">
                 <p className="text-2xl font-semibold ">Users</p>
                 <p>Total users : {usersData.users.length}</p>
                 <p>users : {user.length}</p>
                 <p>admin : {admin.length}</p>
               </div>
-              <div className="bg-green-500 h-60 rounded-lg p-5 text-white">
+              <div className="bg-zinc-100 h-60 rounded-lg p-5 text-black">
               <p className="text-2xl font-semibold ">Products</p>
                 <p>Total products : {productsData.data.length}</p>
                 <p>Snow : {snow.length}</p>
                 <p>Rain : {rain.length}</p>
                 <p>Sun : {sun.length}</p>
               </div>
-              <div className="bg-blue-500 h-60 rounded-lg p-5 text-white">
+              <div className="bg-gray-100 h-60 rounded-lg p-5 text-black">
                 <p className="text-2xl font-semibold ">Orders</p>
               </div>
-              <div className="bg-pink-500 h-60 rounded-lg p-5 text-white">
+              <div className="bg-gray-100 h-60 rounded-lg p-5 text-black">
               <p className="text-2xl font-semibold ">total income</p>
                 </div>
            </div>

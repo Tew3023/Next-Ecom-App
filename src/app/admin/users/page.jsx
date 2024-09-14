@@ -197,35 +197,35 @@ export default function Users() {
           </caption>
           <thead>
             <tr>
-              <th className="px-3 py-2 text-left bg-zinc-100 text-md border border-slate-300">No.</th>
-              <th className="px-3 py-2 text-left bg-zinc-100 border border-slate-300">First Name</th>
-              <th className="px-3 py-2 text-left bg-zinc-100 border border-slate-300">Last Name</th>
-              <th className="px-3 py-2 text-left bg-zinc-100 border border-slate-300">Email</th>
-              <th className="px-3 py-2 text-left bg-zinc-100 border border-slate-300">Role</th>
-              <th className="px-3 py-2 text-center bg-zinc-100 border border-slate-300">Edit</th>
-              <th className="px-3 py-2 text-center bg-zinc-100 border border-slate-300">Delete</th>
+              <th className="px-3 py-2 text-left bg-zinc-100 text-md">No.</th>
+              <th className="px-3 py-2 text-left bg-zinc-100">First Name</th>
+              <th className="px-3 py-2 text-left bg-zinc-100">Last Name</th>
+              <th className="px-3 py-2 text-left bg-zinc-100">Email</th>
+              <th className="px-3 py-2 text-left bg-zinc-100">Role</th>
+              <th className="px-3 py-2 text-center bg-zinc-100">Edit</th>
+              <th className="px-3 py-2 text-center bg-zinc-100">Delete</th>
             </tr>
           </thead>
           <tbody>
             {usersData.users.map((item, index) => (
               <tr key={item._id}>
-                <td className="px-3 border border-slate-300">{index + 1}</td>
-                <td className="px-3 border border-slate-300">{item.firstname}</td>
-                <td className="px-3 border border-slate-300">{item.lastname}</td>
-                <td className="px-3 border border-slate-300">{item.email}</td>
-                <td className="px-3 border border-slate-300">{item.role}</td>
-                <td className="px-3 border border-slate-300 text-center">
+                <td className="px-3 py-2">{index + 1}</td>
+                <td className="px-3 py-2">{item.firstname}</td>
+                <td className="px-3 py-2">{item.lastname}</td>
+                <td className="px-3 py-2">{item.email}</td>
+                <td className="px-3  py-2">{item.role}</td>
+                <td className="px-3 text-center  py-2">
                   <button
                     onClick={() => toggleEditPopup(item)}
-                    className="px-2 py-1 rounded-md text-green-600"
+                    className="px-2  py-2 rounded-md bg-green-600 text-white"
                   >
                     Edit
                   </button>
                 </td>
-                <td className="px-3 border border-slate-300 text-center">
+                <td className="px-3 text-center">
                   <button
                     onClick={() => togglePopup(item._id)}
-                    className="px-2 py-1 rounded-md text-red-600"
+                    className="px-2  py-2 rounded-md bg-red-600 text-white"
                   >
                     Delete
                   </button>

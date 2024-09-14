@@ -215,28 +215,28 @@ export default function Products() {
           </caption>
           <thead>
             <tr>
-              <th className="px-3 py-2 text-left bg-zinc-100 text-md border border-slate-300">
+              <th className="px-3 py-2 text-left bg-zinc-100 text-md ">
                 No.
               </th>
-              <th className="px-3 py-2 text-left bg-zinc-100 border border-slate-300">
+              <th className="px-3 py-2 text-left bg-zinc-100 ">
                 Name
               </th>
-              <th className="px-3 py-2 text-left bg-zinc-100 border border-slate-300">
+              <th className="px-3 py-2 text-left bg-zinc-100 ">
                 Image
               </th>
-              <th className="px-3 py-2 text-left bg-zinc-100 border border-slate-300">
+              <th className="px-3 py-2 text-left bg-zinc-100 ">
                 Price
               </th>
-              <th className="px-3 py-2 text-left bg-zinc-100 border border-slate-300">
+              <th className="px-3 py-2 text-left bg-zinc-100 ">
                 Collection
               </th>
-              <th className="px-3 py-2 text-left bg-zinc-100 border border-slate-300">
+              <th className="px-3 py-2 text-left bg-zinc-100 ">
                 Quantity
               </th>
-              <th className="px-3 py-2 text-center bg-zinc-100 border border-slate-300">
+              <th className="px-3 py-2 text-center bg-zinc-100 ">
                 Edit
               </th>
-              <th className="px-3 py-2 text-center bg-zinc-100 border border-slate-300">
+              <th className="px-3 py-2 text-center bg-zinc-100 ">
                 Delete
               </th>
             </tr>
@@ -244,34 +244,34 @@ export default function Products() {
           <tbody>
             {usersData.shoes.map((item, index) => (
               <tr key={item._id}>
-                <td className="px-3 border border-slate-300">{index + 1}</td>
-                <td className="px-3 border border-slate-300">{item.name}</td>
-                <td className="px-3 border border-slate-300 flex justify-center">
+                <td className="px-3 ">{index + 1}</td>
+                <td className="px-3 ">{item.name}</td>
+                <td className="px-3  flex justify-center">
                   <img
                     src={item.url}
                     alt={item.name}
                     className="w-20 h-20 rounded-sm mx-5 my-2"
                   />
                 </td>
-                <td className="px-3 border border-slate-300">{item.price}</td>
-                <td className="px-3 border border-slate-300">
+                <td className="px-3 ">{item.price}</td>
+                <td className="px-3 ">
                   {item.collection}
                 </td>
-                <td className="px-3 border border-slate-300">
+                <td className="px-3 ">
                   {item.stock_quantity}
                 </td>
-                <td className="px-3 border border-slate-300 text-center">
+                <td className="px-3  text-center">
                   <button
                     onClick={() => toggleEditPopup(item)}
-                    className="px-2 py-1 text-green-500 rounded-md"
+                    className="px-2 py-1 bg-green-500 text-white rounded-md"
                   >
                     Edit
                   </button>
                 </td>
-                <td className="px-3 border border-slate-300 text-center">
+                <td className="px-3 text-center">
                   <button
                     onClick={() => togglePopup(item._id)}
-                    className="px-2 py-1 text-red-500  rounded-md"
+                    className="px-2 py-1 bg-red-500 text-white  rounded-md"
                   >
                     Delete
                   </button>

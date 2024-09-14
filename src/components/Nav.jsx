@@ -42,7 +42,7 @@ export default function Nav() {
         <div className="flex h-20 items-center justify-between">
           <div className="space-x-6">
             <Link href="/" className="text-2xl font-semibold">
-              THESUS
+              THESYS
             </Link>
             <Link
               className="text-md hover:underline underline-offset-4 decoration-1"

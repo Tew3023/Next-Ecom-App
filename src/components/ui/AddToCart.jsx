@@ -5,15 +5,17 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useDispatch } from "react-redux";
+import { setName, setPrice ,setUrl } from "@/app/store/counterSlice";
 
 export default function AddToCart({ filteredData }) {
+  const dispatch = useDispatch()
   const [element, setElement] = useState(false);
   const [size, setSize] = useState("");
 
   const showSize = () => {
     setElement(!element);
   };
-
 
   const sizeOptions = [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49];
 
@@ -23,22 +25,22 @@ export default function AddToCart({ filteredData }) {
 
   const addToCart = async () => {
     try {
+      dispatch(setName(filteredData.name))
+      dispatch(setPrice(filteredData.price))
+      dispatch(setUrl(filteredData.url))
+
       if (!size) {
         console.log("Please select a size before adding to cart");
         return;
       }
   
       const storedCartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-      
       const existingItem = storedCartItems.find(item => item.name === filteredData.name && item.size === size);
       
       if (existingItem) {
- 
         existingItem.quantity += 1;
       } else {
-        // Parse the price from filteredData
         const price = parseFloat(filteredData.price.replace(/[^0-9.-]+/g, ""));
-        
         const cartItem = {
           name: filteredData.name,
           url: filteredData.url,
@@ -47,8 +49,6 @@ export default function AddToCart({ filteredData }) {
           quantity: 1,
           collection: filteredData.collection
         };
-        
-        // Add the new item to the cart
         storedCartItems.push(cartItem);
       }
   
